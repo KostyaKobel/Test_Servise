@@ -1,46 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe "Links", type: :request do
-  describe "GET /index" do
-    it "returns http success" do
-      get "/links/index"
-      expect(response).to have_http_status(:success)
-    end
-  end
 
-  describe "GET /show" do
-    it "returns http success" do
-      get "/links/show"
-      expect(response).to have_http_status(:success)
-    end
+  it 'redirects to the original URL for a given short link' do
+    url = 'https://getbootstrap.com/docs/5.0/components/buttons/'
+    linkened = Linkened.new(url)
+    link = linkened.generate_short_link
+    get link.shortened_url
+    expect(response).to redirect_to(link.original_url)
   end
-
-  describe "GET /new" do
-    it "returns http success" do
-      get "/links/new"
-      expect(response).to have_http_status(:success)
-    end
-  end
-
-  describe "GET /create" do
-    it "returns http success" do
-      get "/links/create"
-      expect(response).to have_http_status(:success)
-    end
-  end
-
-  describe "GET /edit" do
-    it "returns http success" do
-      get "/links/edit"
-      expect(response).to have_http_status(:success)
-    end
-  end
-
-  describe "GET /destroy" do
-    it "returns http success" do
-      get "/links/destroy"
-      expect(response).to have_http_status(:success)
-    end
-  end
-
 end

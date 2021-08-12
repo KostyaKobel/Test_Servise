@@ -10,6 +10,14 @@ RSpec.describe Link do
       expect(link.valid?).to be(true)
     end
 
+    it 'is invalid if the URL is not formatted properly' do
+      link = Link.new(
+        original_url: 'asdsdgsdg',
+        short_url: 'https://www.favoritewebsite.com/'
+      )
+      expect(link.valid?).to be(false)
+    end
+
     it 'is invalid if does not have short url' do
       link = Link.new(
         original_url: 'https://www.favoritewebsite.com/articles/how-to-cook'
@@ -39,5 +47,4 @@ RSpec.describe Link do
       expect(link2.valid?).to be(false)
     end
   end
-
 end

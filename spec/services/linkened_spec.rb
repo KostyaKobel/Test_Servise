@@ -27,7 +27,7 @@ RSpec.describe Linkened do
     expect(link.valid?).to be(true)
 
     link2 = linkened.generate_short_link
-    expect(link2.valid?).to be(true)
+    expect(link2.valid?).to be(false)
   end
 
 end
