@@ -1,0 +1,14 @@
+= link_to 'New Short link', new_link_path
+.container
+  .p-5
+    .card
+      .card-body
+        - @links.each do |link|
+          p
+            span.short_url Short URL:
+            |
+            = link_to link.shortened_url, link_path(link)
+            |
+            = link_to ' | Edit |', edit_link_path(link)
+            |
+            = link_to ' Delete', link_path(link), method: :delete, data: { confirm: "Are you shure?" }

@@ -1,0 +1,16 @@
+.container
+  .p-5
+    .card
+      .card-body
+        = form_for @link do |f|
+          h5.card-title Enter a URL to shorten
+          - if @link.errors[:original_url]
+            = f.text_field :original_url, class: 'form-control', placeholder: 'Enter URL...'
+            .alert.alert-danger.alert-dismissible.fade.show role="alert"
+              span
+                = @link.errors[:original_url].first
+              button.btn-close aria-label="Close" data-bs-dismiss="alert" type="button"
+          br/
+          = f.submit "Shorten", class: 'btn btn-success mt-2'
+          = link_to ' Back', @link
+        #short-link
