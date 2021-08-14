@@ -1,0 +1,11 @@
+.container
+  .p-5
+    .card
+      .card-body
+        - flash.each do |name, msg|
+          div class=("alert alert-#{name}") role="alert"
+            = msg
+        span.short_url Short URL:
+        = link_to @link.shortened_url, @link.original_url
+        |
+        = link_to ' | Back', admin_links_path

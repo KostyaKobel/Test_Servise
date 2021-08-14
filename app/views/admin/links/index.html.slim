@@ -1,0 +1,21 @@
+.container
+  .p-5
+    h5 Signed in as admin
+    .card
+      .card-body
+        table.table
+          thead
+            tr
+              th scope="col"  #
+              th scope="col"  Short URL:
+              th scope="col"  Original URL
+              th scope="col"  Visit_Link
+              th scope="col"
+          tbody
+            - @links.each do |link|
+              tr
+                td = link.id
+                td = link_to link.shortened_url, admin_link_path(link)
+                td = link.original_url
+                td#count = link.visit_link_count
+                td = link_to ' Destroy', admin_link_path(link), method: :delete, data: { confirm: "Are you shure?" }
