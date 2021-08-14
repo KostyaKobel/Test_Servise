@@ -14,4 +14,15 @@ class Link < ApplicationRecord
     "http://localhost:3000/#{short_url}"
   end
 
+  private
+
+  # def visit_link(link)
+  #   link = @link.shortened_url
+  #   if action == 'show'
+  #     link.update_attributes(visit_count_link: 1)
+  #   else
+  #     visit_count_link: 0
+  #   end
+  # end
+
 end
