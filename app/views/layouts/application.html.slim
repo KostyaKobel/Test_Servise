@@ -10,6 +10,7 @@ html
     = javascript_include_tag 'application','data-turbolinks-track': 'reload'
   body
     = link_to 'Main ', links_path, class: 'link_main'
+    = link_to '| New Short link', new_link_path
     - if flash[:notice]
       .alert.alert-success.alert-dismissible.position-absolute.start-50.fade.show role="alert"
         button.btn-close data-bs-dismiss="alert" type="button"
