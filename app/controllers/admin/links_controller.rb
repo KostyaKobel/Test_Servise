@@ -3,8 +3,12 @@ before_action :link_find, except: [:index, :new, :create]
   include HttpAuthConcern
   http_basic_authenticate_with name: 'admin', password: '1q2w3e4rpassword'
 
+  LINKS_PER_PAGE = 5
+
   def index
-    @links = Link.all
+    @q = Link.ransack(params[:q])
+    @links = @q.result.paginate( page: params[:page],
+                                per_page: LINKS_PER_PAGE )
   end
 
   def show; end

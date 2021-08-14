@@ -68,3 +68,5 @@ group :test, :development do
   gem 'factory_bot_rails'
   gem 'database_cleaner'
 end
+
+gem "ransack", "~> 2.3"
