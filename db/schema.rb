@@ -10,14 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210813090917) do
+ActiveRecord::Schema.define(version: 20210816112347) do
 
   create_table "links", force: :cascade do |t|
     t.string   "short_url"
     t.string   "original_url"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.integer  "visit_link_count", default: 0
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.integer  "visit_link_count",       default: 0
+    t.string   "generate_link_password"
   end
 
 end

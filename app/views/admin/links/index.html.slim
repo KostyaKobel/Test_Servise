@@ -24,7 +24,7 @@
                 td = link_to link.shortened_url, admin_link_path(link)
                 td = link.original_url
                 td#count = link.visit_link_count
-                td = link_to ' Dest_Short_link', admin_link_path(link), method: :delete, data: { confirm: "Are you shure destroy?" }
+                td = link_to 'Dest_Short_link', admin_link_path(link), method: :delete, data: { confirm: "Are you shure destroy?" }
         .row.pag
           .mx-auto
             .apple_pagination.text-center

@@ -10,7 +10,7 @@ class Linkened
   end
 
   def generate_short_link
-    link_model.create(original_url: url, short_url: short_url)
+    link_model.create(original_url: url, short_url: short_url, generate_link_password: generate_link_password)
   end
 
   def short_url
@@ -24,5 +24,9 @@ class Linkened
 
   def get_fresh_code
     SecureRandom.uuid[0..6]
+  end
+
+  def generate_link_password
+    SecureRandom.uuid[0..15]
   end
 end

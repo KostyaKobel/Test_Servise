@@ -1,12 +1,13 @@
 class LinksController < ApplicationController
   before_action :link_find, except: [:index, :new, :create]
+  before_action :access_password, only: [:edit, :destroy]
 
   def index
     @links = Link.all
   end
 
   def show
-    action_name == 'show'? @link.update_attributes(visit_link_count: 1) : 0
+    visit_link(@link.shortened_url)
   end
 
   def new
@@ -49,6 +50,33 @@ class LinksController < ApplicationController
   end
 
   def link_params
-    params.require(:link).permit(:original_url, :short_url)
+    params.require(:link).permit(:original_url, :short_url, :visit_link_count)
+  end
+
+  def visit_link(link)
+    link = @link
+    if action_name == 'show'
+      link.update_attributes(visit_link_count: 1)
+    else
+      visit_link_count
+    end
+  end
+
+  def access_password
+    binding.pry
+    link = @link
+    if action_name == 'edit'
+      if link.include?(link.generate_link_password)
+        redirect_to link_path(link)
+      else
+        redirect_to links_path
+      end
+    elsif action_name == 'destroy'
+      if link.include?(link.generate_link_password)
+        link.destroy
+      else
+        redirect_to links_path
+      end
+    end
   end
 end

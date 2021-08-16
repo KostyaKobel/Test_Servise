@@ -14,7 +14,7 @@ before_action :link_find, except: [:index, :new, :create]
   def show; end
 
   def destroy
-    @link.shortened_url.destroy
+    @link.short_url.destroy
     redirect_to admin_links_path
   end
 
