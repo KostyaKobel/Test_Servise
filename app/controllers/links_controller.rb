@@ -7,7 +7,7 @@ class LinksController < ApplicationController
   end
 
   def show
-    visit_link(@link.shortened_url)
+    visit_link(@link)
   end
 
   def new
@@ -55,28 +55,17 @@ class LinksController < ApplicationController
 
   def visit_link(link)
     link = @link
-    if action_name == 'show'
-      link.update_attributes(visit_link_count: 1)
-    else
-      visit_link_count
-    end
+    link.update_attribute(:visit_link_count, link.visit_link_count + 1) if action_name == 'show'
   end
 
   def access_password
-    binding.pry
     link = @link
     if action_name == 'edit'
-      if link.include?(link.generate_link_password)
-        redirect_to link_path(link)
-      else
-        redirect_to links_path
-      end
+      link == link.generate_link_password
+      redirect_to edit_link_path(link)
     elsif action_name == 'destroy'
-      if link.include?(link.generate_link_password)
-        link.destroy
-      else
-        redirect_to links_path
-      end
+      link == link.generate_link_password
+      link.destroy
     end
   end
 end
