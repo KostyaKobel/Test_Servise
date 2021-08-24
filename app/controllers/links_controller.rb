@@ -7,7 +7,9 @@ class LinksController < ApplicationController
   end
 
   def show
-    visit_link(@link)
+    # @link = Link.find_by_short_url(params[:short_url])
+    # render 'errors/404', status: 404 if @link.nil?
+    @link.update_column(:last_date_visit_link, Time.new()) if visit_link(@link)
   end
 
   def new
@@ -53,19 +55,15 @@ class LinksController < ApplicationController
     params.require(:link).permit(:original_url, :short_url, :visit_link_count)
   end
 
+
   def visit_link(link)
     link = @link
     link.update_attribute(:visit_link_count, link.visit_link_count + 1) if action_name == 'show'
   end
 
   def access_password
-    link = @link
-    if action_name == 'edit'
-      link == link.generate_link_password
-      redirect_to edit_link_path(link)
-    elsif action_name == 'destroy'
-      link == link.generate_link_password
-      link.destroy
-    end
+    link = Link.find_by(params[:generate_link_password])
+    link == link.generate_link_password { |link| link.redirect_to edit_link_path(link) } if action_name == 'edit'
+    link == link.generate_link_password { |link| link.link.destroy } if action_name == 'destroy'
   end
 end
