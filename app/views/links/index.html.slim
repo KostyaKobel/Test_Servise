@@ -16,7 +16,7 @@
           - @links.each do |link|
             tr
               th scope="row" = link.id
-              td = link_to link.shortened_url, link
+              td = link.shortened_url
               td#count = link.visit_link_count
               td = link_to 'Show', link
               td = link_to 'Edit', edit_link_path(link)
