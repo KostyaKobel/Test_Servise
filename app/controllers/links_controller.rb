@@ -9,7 +9,8 @@ class LinksController < ApplicationController
   def show
     # @link = Link.find_by_short_url(params[:short_url])
     # render 'errors/404', status: 404 if @link.nil?
-    @link.update_column(:last_date_visit_link, Time.new()) if visit_link(@link)
+    @link.register_visit
+    redirect_to @link.original_url
   end
 
   def new
@@ -17,8 +18,7 @@ class LinksController < ApplicationController
   end
 
   def create
-    linkened = Linkened.new(link_params[:original_url])
-    @link = linkened.generate_short_link
+    @link = Link.new(link_params)
     if @link.save
       flash[:notice] = "Successfully create Link"
       redirect_to link_path(@link)
@@ -33,7 +33,7 @@ class LinksController < ApplicationController
   def update
     if @link.update(link_params)
       flash[:notice] = "Your Link success updated"
-      redirect_to @link
+      redirect_to links_path
     else
       flash.now[:error] = "Invalid Link format"
       render :edit
@@ -41,7 +41,7 @@ class LinksController < ApplicationController
   end
 
   def destroy
-    @link.destroy!
+    @link.destroy
     redirect_to links_path
   end
 
@@ -52,14 +52,9 @@ class LinksController < ApplicationController
   end
 
   def link_params
-    params.require(:link).permit(:original_url, :short_url, :visit_link_count)
+    params.require(:link).permit(:original_url)
   end
 
-
-  def visit_link(link)
-    link = @link
-    link.update_attribute(:visit_link_count, link.visit_link_count + 1) if action_name == 'show'
-  end
 
   def access_password
     link = Link.find_by(params[:generate_link_password])
