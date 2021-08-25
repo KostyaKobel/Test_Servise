@@ -7,8 +7,6 @@ class LinksController < ApplicationController
   end
 
   def show
-    # @link = Link.find_by_short_url(params[:short_url])
-    # render 'errors/404', status: 404 if @link.nil?
     @link.register_visit
     redirect_to @link.original_url
   end
@@ -19,6 +17,7 @@ class LinksController < ApplicationController
 
   def create
     @link = Link.new(link_params)
+    @link.generate_link_password
     if @link.save
       flash[:notice] = "Successfully create Link"
       redirect_to link_path(@link)
