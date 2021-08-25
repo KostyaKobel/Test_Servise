@@ -1,19 +1,10 @@
 class Link < ApplicationRecord
-  # validates_presence_of :original_url
-  # validates :original_url, format: URI::regexp(%w[http https])
-  # validates_uniqueness_of :short_url
-  # validates_length_of :original_url, within: 3..255, on: :create, message: "too long"
-  # validates_length_of :short_url, within: 3..255, on: :create, message: "too long"
-  validates :short_url, presence: true
-  validates :original_url, presence: true, uniqueness: { case_sensitive: false }
-  validate :original_url_format
-
-  def original_url_format
-    uri = URI.parse(original_url || '')
-    if uri.host.nil?
-      errors.add(:original_url, 'Invalid URL format')
-    end
-  end
+  validates_presence_of :original_url
+  validates :original_url, format: URI::regexp(%w[http https])
+  validates_uniqueness_of :original_url
+  validates_uniqueness_of :short_url
+  validates_length_of :original_url, within: 3..255, on: :create, message: "too long"
+  validates_length_of :short_url, within: 3..255, on: :create, message: "too long"
 
   def shortened_url
     "http://localhost:3000/#{short_url}"
@@ -31,12 +22,16 @@ class Link < ApplicationRecord
     update(visit_link_count: visit_link_count + 1, last_date_visit_link: Time.now)
   end
 
-  # auto slug generation
+  # auto short_url generation
   before_validation :generate_short_url
 
   def generate_short_url
     self.short_url = SecureRandom.uuid[0..5] if self.short_url.nil? || self.short_url.empty?
     true
+  end
+
+  def generate_link_password
+    update(generate_link_password: SecureRandom.uuid[0..15])
   end
 
   # fast access to the shortened link
@@ -55,5 +50,4 @@ class Link < ApplicationRecord
     Link.shorten(original_url, short_url + SecureRandom.uuid[0..2])
   end
 
-
-end
+  end
