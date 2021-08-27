@@ -21,3 +21,9 @@
               td = link_to 'Show', link
               td = link_to 'Edit', edit_link_path(link)
               td = button_to ' Destroy', link_path(link), method: :delete, data: { confirm: "Are you shure?" }
+      .row.pag
+        .mx-auto
+          .apple_pagination.text-center
+            = will_paginate @links, container: false, \
+              previous_label: '« Prev',                \
+              next_label: 'Next »'
