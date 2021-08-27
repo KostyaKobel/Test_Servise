@@ -11,11 +11,11 @@ class Link < ApplicationRecord
   end
 
   def self.link_destroy_greater_than_two
-    Link.where('last_date_visit_link < ?', 2.months.ago).delete_all
+   Link.where('last_date_visit_link < ?', 2.months.ago).delete_all
   end
 
-  def self.ransackable_attributes(auth_object = nil)
-    ["short_url", "visit_link_count"]
+  def self.destroy_short_url
+    Link.update(short_url: nil)
   end
 
   def register_visit
