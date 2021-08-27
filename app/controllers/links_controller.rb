@@ -2,8 +2,11 @@ class LinksController < ApplicationController
   before_action :link_find, except: [:index, :new, :create]
   before_action :access_password, only: [:edit, :destroy]
 
+  LINKS_PER_PAGE = 5
+
   def index
-    @links = Link.all
+    @links = Link.all.paginate( page: params[:page],
+                                per_page: LINKS_PER_PAGE )
   end
 
   def show
