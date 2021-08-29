@@ -67,4 +67,5 @@ group :test, :development do
   gem 'factory_bot_rails'
   gem 'database_cleaner'
   gem 'faker', '~> 2.16'
+  gem 'rails-controller-testing'
 end
