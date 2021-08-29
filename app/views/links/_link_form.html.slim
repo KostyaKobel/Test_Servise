@@ -3,7 +3,7 @@
     .card
       .card-body
         = form_for @link do |f|
-          h5.card-title Enter a URL to shorten
+          = f.label :original_url, 'Original URL:'
           = f.text_field :original_url, class: 'form-control', placeholder: 'Enter URL...'
           = f.submit "Shorten", class: 'btn btn-success mt-2'
           = link_to ' Back', links_path
