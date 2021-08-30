@@ -44,6 +44,7 @@ class LinksController < ApplicationController
 
   def destroy
     @link.destroy
+    flash[:notice] = "Your Link success destroyed"
     redirect_to links_path
   end
 
@@ -60,7 +61,7 @@ class LinksController < ApplicationController
 
   def access_password
     link = Link.find_by(params[:generate_link_password])
-    link == link.generate_link_password { |link| link.redirect_to edit_link_path(link) } if action_name == 'edit'
-    link == link.generate_link_password { |link| link.link.destroy } if action_name == 'destroy'
+    link = link.generate_link_password { |link| link.redirect_to edit_link_path(link) } if action_name == 'edit'
+    link = link.generate_link_password { |link| link.link.destroy } if action_name == 'destroy'
   end
 end
